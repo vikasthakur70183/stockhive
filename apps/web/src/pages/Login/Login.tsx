@@ -1,14 +1,34 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import styles from "./Login.module.css";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
+    setError("");
+    setIsLoading(true);
+
+    try {
+      console.log("Attempting login with:", { email, password });
+      await login(email, password);
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message || "Login failed. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -16,11 +36,7 @@ const Login = () => {
       {/* LEFT SIDE */}
       <div className={styles.left}>
         <div className={styles.brand}>
-          <img
-            src="/logo.png"   // put your logo inside public folder
-            alt="StockHive"
-            className={styles.logo}
-          />
+          <img src="/logo.png" alt="StockHive" className={styles.logo} />
           <h1>StockHive</h1>
         </div>
       </div>
@@ -28,16 +44,12 @@ const Login = () => {
       {/* RIGHT SIDE */}
       <div className={styles.right}>
         <div className={styles.formCard}>
-          <img
-            src="/logo-small.png"
-            alt="logo"
-            className={styles.smallLogo}
-          />
-
           <h2>Log in to your account</h2>
           <p className={styles.subtitle}>
             Welcome back! Please enter your details.
           </p>
+
+          {error && <div className={styles.error}>{error}</div>}
 
           <form onSubmit={handleSubmit} className={styles.form}>
             <label>Email</label>
@@ -67,8 +79,12 @@ const Login = () => {
               <a href="#">Forgot password</a>
             </div>
 
-            <button type="submit" className={styles.primaryBtn}>
-              Sign in
+            <button
+              type="submit"
+              className={styles.primaryBtn}
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing in..." : "Sign in"}
             </button>
 
             <button type="button" className={styles.googleBtn}>
@@ -81,7 +97,7 @@ const Login = () => {
           </form>
 
           <p className={styles.switch}>
-            Don’t have an account? <Link to="/signup">Sign up</Link>
+            Don't have an account? <Link to="/signup">Sign up</Link>
           </p>
         </div>
       </div>

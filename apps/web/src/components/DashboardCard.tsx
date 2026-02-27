@@ -1,9 +1,5 @@
-import React from 'react'
-
 function DashboardCard() {
-  return (
-    <div>DashboardCard</div>
-  )
+  return <div>DashboardCard</div>;
 }
 
-export default DashboardCard
+export default DashboardCard;

@@ -5,27 +5,32 @@ import authRoutes from "../routes/auth.routes.js";
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:5000",
-  "https://stockhive.vercel.app",
   "http://localhost:5173",
-  "http://localhost:5174",
+  "https://stockhive.vercel.app",
+  "/*",
+  "http://localhost:5001",
 ];
 
-// CORS middleware first
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+    origin: function (origin, callback) {
+      // Allow requests with no origin (Postman, mobile apps, curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+
+      return callback(null, false); // do NOT throw error
     },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );
 
-// Body parsers
+// Explicitly handle preflight
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

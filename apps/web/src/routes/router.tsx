@@ -5,12 +5,13 @@ import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute";
+import Home from "../pages/Home/Home";
 
 const router = createBrowserRouter([
   {
     element: <AuthLayout />,
     children: [
-      { path: "/", element: <h1>Welcome to StockHive</h1> },
+      { path: "/", element: <Home /> },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
     ],

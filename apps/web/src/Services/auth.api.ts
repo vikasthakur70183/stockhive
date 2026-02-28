@@ -5,10 +5,10 @@ const loginRequest = async (email: string, password: string) => {
   return response.data;
 };
 
- const registerRequest = async (
+const signupRequest = async (
   name: string,
   email: string,
-  password: string
+  password: string,
 ) => {
   const response = await api.post("/auth/register", {
     name,
@@ -18,5 +18,7 @@ const loginRequest = async (email: string, password: string) => {
   return response.data;
 };
 
+// Backward-compatible export for existing usage.
+const registerRequest = signupRequest;
 
-export { loginRequest, registerRequest };
+export { loginRequest, signupRequest, registerRequest };

@@ -135,8 +135,8 @@ input:focus {
 .error {
   background-color: #fee2e2;
   color: #dc2626;
-  padding: 10pxpx;
-  border-radius: 8 12px;
+  padding: 10px;
+  border-radius: 8px;
   font-size: 14px;
   margin-bottom: 16px;
 }

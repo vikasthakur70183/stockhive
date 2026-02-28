@@ -12,16 +12,20 @@ const validatePassword = (password) => {
   return password && password.length >= 6;
 };
 
+const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    const normalizedName = typeof name === "string" ? name.trim() : "";
+    const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
 
     // Input validation
-    if (!name || !email || !password) {
+    if (!normalizedName || !normalizedEmail || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    if (!validateEmail(email)) {
+    if (!validateEmail(normalizedEmail)) {
       return res.status(400).json({ message: "Invalid email format" });
     }
 
@@ -31,7 +35,9 @@ export const register = async (req, res) => {
         .json({ message: "Password must be at least 6 characters" });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      email: { $regex: new RegExp(`^${escapeRegex(normalizedEmail)}$`, "i") },
+    });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -39,8 +45,8 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name,
-      email,
+      name: normalizedName,
+      email: normalizedEmail,
       password: hashedPassword,
     });
 
@@ -62,17 +68,20 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
 
     // Input validation
-    if (!email || !password) {
+    if (!normalizedEmail || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    if (!validateEmail(email)) {
+    if (!validateEmail(normalizedEmail)) {
       return res.status(400).json({ message: "Invalid email format" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      email: { $regex: new RegExp(`^${escapeRegex(normalizedEmail)}$`, "i") },
+    });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }

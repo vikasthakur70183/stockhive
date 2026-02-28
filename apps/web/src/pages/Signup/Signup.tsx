@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import styles from "./Signup.module.css";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -18,8 +19,11 @@ const Signup = () => {
     e.preventDefault();
     setError("");
 
+    const cleanName = name.trim();
+    const cleanEmail = email.trim().toLowerCase();
+
     // Validation
-    if (!name || !email || !password || !confirmPassword) {
+    if (!cleanName || !cleanEmail || !password || !confirmPassword) {
       setError("All fields are required.");
       return;
     }
@@ -37,7 +41,7 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      await register(name, email, password);
+      await register(cleanName, cleanEmail, password);
       navigate("/dashboard");
     } catch (err: any) {
       setError(
@@ -75,6 +79,8 @@ const Signup = () => {
               placeholder="Enter your full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              disabled={isLoading}
               required
             />
 
@@ -84,24 +90,30 @@ const Signup = () => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              disabled={isLoading}
               required
             />
 
             <label>Password</label>
-            <input
-              type="password"
+            <PasswordInput
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+              minLength={6}
+              disabled={isLoading}
               required
             />
 
             <label>Confirm Password</label>
-            <input
-              type="password"
+            <PasswordInput
               placeholder="••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              autoComplete="new-password"
+              minLength={6}
+              disabled={isLoading}
               required
             />
 
@@ -113,7 +125,7 @@ const Signup = () => {
               {isLoading ? "Creating account..." : "Sign up"}
             </button>
 
-            <button type="button" className={styles.googleBtn}>
+            <button type="button" className={styles.googleBtn} disabled={isLoading}>
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 alt="google"

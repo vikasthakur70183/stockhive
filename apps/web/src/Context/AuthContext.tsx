@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import { loginRequest, registerRequest } from "../Services/auth.api";
+import { loginRequest, signupRequest } from "../Services/auth.api";
 
 interface User {
   _id: string;
@@ -55,7 +55,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const data = await registerRequest(name, email, password);
+    const data = await signupRequest(name, email, password);
     setUser(data.user);
     setToken(data.token);
     setIsAuthenticated(true);
@@ -79,4 +79,3 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export { AuthProvider, authContext };
-

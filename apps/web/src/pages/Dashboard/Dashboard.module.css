@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 480px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  color: #111827;
+}
+
+.subtitle {
+  margin: 0;
+  color: #6b7280;
+}
+
+.logoutButton {
+  width: fit-content;
+  margin-top: 8px;
+  padding: 10px 16px;
+  background-color: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.logoutButton:hover {
+  background-color: #b91c1c;
+}

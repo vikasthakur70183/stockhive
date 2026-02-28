@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import styles from "./Login.module.css";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 
 
 const Login = () => {
@@ -19,8 +20,8 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      console.log("Attempting login with:", { email, password });
-      await login(email, password);
+      const cleanEmail = email.trim().toLowerCase();
+      await login(cleanEmail, password);
       navigate("/dashboard");
     } catch (err: any) {
       setError(
@@ -58,21 +59,24 @@ const Login = () => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              disabled={isLoading}
               required
             />
 
             <label>Password</label>
-            <input
-              type="password"
+            <PasswordInput
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              disabled={isLoading}
               required
             />
 
             <div className={styles.options}>
               <label className={styles.remember}>
-                <input type="checkbox" />
+                <input type="checkbox" disabled={isLoading} />
                 Remember for 30 days
               </label>
 
@@ -87,7 +91,7 @@ const Login = () => {
               {isLoading ? "Signing in..." : "Sign in"}
             </button>
 
-            <button type="button" className={styles.googleBtn}>
+            <button type="button" className={styles.googleBtn} disabled={isLoading}>
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 alt="google"

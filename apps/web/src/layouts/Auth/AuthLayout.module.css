@@ -2,3 +2,71 @@
   min-height: 100vh;
   width: 100%;
 }
+
+.stage {
+  min-height: 100vh;
+  width: 100%;
+  perspective: 1300px;
+  perspective-origin: center;
+}
+
+.panel {
+  min-height: 100vh;
+  width: 100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.flipForward {
+  animation: flipForward 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flipBackward {
+  animation: flipBackward 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fadeIn {
+  animation: fadeIn 280ms ease-out;
+}
+
+@keyframes flipForward {
+  0% {
+    opacity: 0.25;
+    transform: rotateY(-72deg) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes flipBackward {
+  0% {
+    opacity: 0.25;
+    transform: rotateY(72deg) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flipForward,
+  .flipBackward,
+  .fadeIn {
+    animation-duration: 1ms;
+  }
+}

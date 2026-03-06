@@ -1,33 +1,135 @@
-.container {
+.dashboard {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1.1fr;
+  gap: 18px;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e6ebf1;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.large {
+  min-height: 132px;
+}
+
+.heading {
+  margin: 0;
+  font-size: 20px;
+  color: #1f2937;
+}
+
+.metricRow,
+.metricRowTwo {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.metricRow {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metricRowTwo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metric {
+  border: 1px solid #edf1f6;
+  background: #fbfcff;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.metricValue {
+  margin: 0;
+  color: #334155;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.metricLabel {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.headerRow {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 480px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.title {
-  margin: 0;
-  font-size: 28px;
-  color: #111827;
-}
-
-.subtitle {
-  margin: 0;
-  color: #6b7280;
-}
-
-.logoutButton {
-  width: fit-content;
-  margin-top: 8px;
-  padding: 10px 16px;
-  background-color: #dc2626;
-  color: #ffffff;
-  border: none;
+.filterButton {
+  border: 1px solid #d2dae5;
+  background: #fff;
+  color: #475569;
   border-radius: 8px;
-  cursor: pointer;
+  padding: 6px 12px;
   font-weight: 600;
+  font-size: 14px;
 }
 
-.logoutButton:hover {
-  background-color: #b91c1c;
+.chartPlaceholder,
+.lineChartPlaceholder,
+.tablePlaceholder,
+.listPlaceholder {
+  border-radius: 10px;
+  margin-top: 14px;
+  border: 1px dashed #cfd8e3;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f8fafc,
+    #f8fafc 10px,
+    #f1f5f9 10px,
+    #f1f5f9 20px
+  );
+}
+
+.chartPlaceholder {
+  height: 250px;
+}
+
+.lineChartPlaceholder {
+  height: 250px;
+}
+
+.tablePlaceholder {
+  height: 210px;
+}
+
+.listPlaceholder {
+  height: 210px;
+}
+
+.link {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .metricRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  .metricRow,
+  .metricRowTwo {
+    grid-template-columns: 1fr;
+  }
 }

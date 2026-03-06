@@ -1,0 +1,152 @@
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 16px;
+}
+
+.brandIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1f7ef4, #13b4cf);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.brandText {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #1f7ef4;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.navItem,
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #5f697e;
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.navItem:hover,
+.logout:hover {
+  background: #f3f6fb;
+  color: #1f7ef4;
+}
+
+.active {
+  color: #1f7ef4;
+  background: #eef4ff;
+}
+
+.iconWrap {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.logout {
+  margin-top: auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 84px;
+    min-width: 84px;
+    padding: 18px 10px;
+  }
+
+  .brand {
+    justify-content: center;
+    padding: 6px 0 12px;
+  }
+
+  .brandText,
+  .navItem span:last-child,
+  .logout span:last-child {
+    display: none;
+  }
+
+  .navItem,
+  .logout {
+    justify-content: center;
+    padding: 11px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .brand {
+    justify-content: flex-start;
+    padding: 4px 6px;
+  }
+
+  .brandText,
+  .navItem span:last-child,
+  .logout span:last-child {
+    display: block;
+  }
+
+  .nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+
+  .navItem,
+  .logout {
+    white-space: nowrap;
+    padding: 8px 12px;
+  }
+
+  .logout {
+    margin-top: 0;
+  }
+}

@@ -1,45 +1,64 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import styles from "./Topbar.module.css";
 
 function Topbar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+  const { user } = useAuth();
+  const initial = (user?.name || "U").charAt(0).toUpperCase();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "16px 24px",
-        backgroundColor: "#fff",
-        borderBottom: "1px solid #e5e7eb",
-      }}
-    >
-      <h2 style={{ margin: 0, fontSize: "20px" }}>StockHive</h2>
+    <header className={styles.topbar}>
+      <label className={styles.searchWrap}>
+        <SearchIcon />
+        <input
+          type="text"
+          placeholder="Search product, supplier, order"
+          className={styles.searchInput}
+        />
+      </label>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        <span style={{ color: "#6b7280" }}>{user?.name || "User"}</span>
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: "#dc2626",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          Logout
+      <div className={styles.actions}>
+        <button className={styles.iconButton} aria-label="Notifications">
+          <BellIcon />
         </button>
+        <div className={styles.avatar}>{initial}</div>
       </div>
-    </div>
+    </header>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={styles.icon}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
+
+function BellIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={styles.icon}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5" />
+      <path d="M9 17a3 3 0 0 0 6 0" />
+    </svg>
   );
 }
 

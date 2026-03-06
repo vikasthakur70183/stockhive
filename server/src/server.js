@@ -13,5 +13,4 @@ const startServer = async () => {
     console.log("Error starting server:", e.message, e.stack);
   }
 };
-
 startServer();
